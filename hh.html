@@ -1,0 +1,544 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta name="Keywords" content="动易网络,网站管理系统,内容管理系统(CMS),网上商店管理系统,网站建设">
+    <meta name="Description" content="动易（PowerEasy）是国内最大的网站应用软件提供商，涉及政府、教育科研、企业、新闻媒体等多个领域，现有用户数量62万，占据国内四分之一市场份额。公司现有SiteFactory™ 内容管理系统、BizIdea™ 电子商务管理系统、SmartGov™ 政府网站管理系统、SmartSchool™ 学校网站管理系统、SiteGroup™ 站群管理系统 五大产品线，是网站应用软件领域的创新者和领导者。">
+    <title>网站首页-动易网络</title>
+    <link type="text/css" rel="stylesheet" href="/Template/Default/Skin/default.css">
+    <script type="text/javascript">
+        var siteSetup = {sitePath: '/',ajaxPath: '/ajax.aspx',skinPath: '/Template/Default/Skin/'};
+    </script>
+    <script src="/js/jquery.pack.js" type="text/javascript" language="javascript"></script>
+    <script src="/js/jquery.peex.js" type="text/javascript" language="javascript"></script>
+</head>
+<body>
+<!--网站顶部开始-->
+<div id="header">
+    <div class="wrapper">
+        <div class="top">
+            <div id="logo">
+                <a href="/">
+                    <img alt="动易网络" src="/Template/Default/Skin/images/logo.gif"></a>
+            </div>
+            <div class="web_tool">
+                <div class="web_tip">
+                    <img align="absmiddle" alt="正在加载数据..." src="/Template/Default/Skin/Images/loading.gif" id="loginStatusSign" style="display: none;">
+                    <a class="reg" id="loginAnchor" href="javascript:void(0)" style="">会员登录</a><a class="home" href="javascript:void(0)">设为首页</a> <a class="fav" href="javascript:void(0)">加入收藏</a></div>
+                <div style="display: none;" id="loginedUserInfo">
+                    <ul>
+                        <li class="user_out"><a href="/User/Default.aspx">会员中心</a> <span>|</span> <a href="javascript:void(0)" id="logout">退出登录</a> </li>
+                        <li class="money">资金余额：{balances} 元</li>
+                        <li>可用{pointName}：{point} {pointUnit}</li>
+                        <li>经验积分：{experience} 分</li>
+                        <li>待阅短信：{message} 条</li>
+                        <li>待签文章：{signinArticle} 篇</li>
+                        <li>登录次数：{loginCount} 次</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="menu">
+            <div class="main_menu" id="menubox">
+                <ul>
+                    <li class="current"><a target="_blank" href="/Default.aspx"><span><em>首页</em></span></a></li>
+                    <li><a target="_self" href="/Category_1/Index.aspx"><span><em>文章中心</em></span></a></li>
+                    <li><a target="_self" href="/Category_2/Index.aspx"><span><em>图片中心</em></span></a></li>
+                    <li><a target="_self" href="/Category_3/Index.aspx"><span><em>下载中心</em></span></a></li>
+                    <li><a target="_self" href="/Category_7/Index.aspx"><span><em>雁过留声</em></span></a></li>
+                </ul>
+            </div>
+            <div class="sub_menu">
+                <div class="sub_center">
+                    <ul></ul>
+                    <ul></ul>
+                    <ul></ul>
+                    <ul></ul>
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--弹出登录开始-->
+<div style="display: none" class="quick_login" id="loginField">
+    <div class="quick_login_content">
+        <h3 class="close">
+            <img align="absmiddle" alt="关闭" class="overlay_header_close" src="/Template/Default/Skin/images/close.gif">会员登录</h3>
+        <div class="quick_login_info">
+            <ul>
+                <li><label>用户名：</label><input type="text" name="username"></li>
+                <li><label>密&nbsp;&nbsp;码：</label><input type="password" name="userpass"></li>
+                <li id="validateField" style="display: none"><label>验证码：</label><input type="text" id="validateCode" name="validate"><span><img align="absmiddle" title="换一个" id="validateSign" class="validateSign" style="display:none"></span></li>
+                <li class="check"><label><input type="checkbox" name="saveinfo"><span>保持登录状态</span></label></li>
+                <li class="login">
+                    <img align="absmiddle" alt="登录" src="/Template/Default/Skin/images/login.gif" id="login"></li>
+            </ul>
+        </div>
+        <div class="reg_info">
+            <ul>
+                <li>没有帐号？<a title="点此注册" target="_blank" href="/User/Register.aspx">点此注册</a></li>
+                <li><a title="忘记密码？" target="_blank" href="/User/GetPassword.aspx">忘记密码？</a></li>
+            </ul>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<!--弹出登录结束-->
+<script type="text/javascript">
+    $(function () {
+        $('a[class="fav"]').addFavorite();
+        $('a[class="home"]').setHomePage();
+
+        $('#change_search_model').click(function () {
+            if($('.model_list').css('display') != 'block')
+            {
+                $('.model_list').slideDown(500);
+                try { clearTimeout(timer); } catch (e) { }
+            }else{
+                $('.model_list').mouseleave();
+            };
+        })
+
+        $('.model_list').mouseleave(function () {
+            timer = setTimeout(function () {
+                $('.model_list').slideUp(100);
+            }, 500);
+        })
+
+        $('.model_list a').click(function () {
+            $('#change_search_model').text($(this).text())
+            $('.model_list').slideUp(100);
+            try { clearTimeout(timer); } catch (e) { }
+        })
+
+        $('.model_search_click').click(function () {
+            var model = checkSearchModel();
+            doModelSearch(model[0],model[1]);
+        })
+
+        $('#model_adv_search').click(function () {
+            var model = checkSearchModel();
+            doModelSearch(model[0],2);
+        })
+
+        var checkSearchModel = function(){
+            var model = $('#change_search_model').text();
+            switch (model) {
+                case '文章':
+                    return[1, 1];
+                case '图片':
+                    return[2, 1];
+                case '软件':
+                    return[3, 1];
+                default:
+                    return[0, 2];
+            }
+        }
+
+        var doModelSearch = function (modelId, searchType) {
+            var searchValue = $('.model_search').val();
+            if (searchType != 2 &amp;&amp; (searchValue == null || searchValue == '')) {
+                alert('请输入要搜索的关键词');
+                $('.model_search').focus();
+                return;
+            }
+            if(searchType == 2 &amp;&amp; modelId == 0){
+                location.href = '/search.aspx?searchType=0&amp;Keyword=' + searchValue;
+                return;
+            }
+            switch (modelId) {
+                case 1:
+                    location.href = '/search.aspx?searchtype=1&amp;modelId=' + modelId + '&amp;nodeId=1&amp;fieldOption=title&amp;Keyword=' + searchValue;
+                    break;
+                case 2:
+                    location.href = '/search.aspx?searchType=1&amp;modelId=' + modelId + '&amp;nodeId=2&amp;fieldOption=title&amp;Keyword=' + searchValue;
+                    break;
+                default:
+                    location.href = '/search.aspx?searchtype=1&amp;modelId=' + modelId + '&amp;nodeId=3&amp;fieldOption=title&amp;Keyword=' + searchValue;
+                    break;
+            }
+        }
+
+        var checkUserLogin = function () {
+            $.pe.ajax('checkUserLogin', { success: function (response) {
+                var _response = $(response);
+                if (_response.find('status').text() == 'ok') {
+                    var _loginedUserInfo = $('#loginedUserInfo'), _loginAnchor = $('#loginAnchor');
+                    _loginedUserInfo.html($.pe.replaceUserInfoVariable(_loginedUserInfo.html(), _response));
+                    //$('#loginedUserInfo,#loginAnchor').bind({
+                    //    'mouseenter': function () {
+                    //        _loginedUserInfo.slideDown(500);
+                    //        try { clearTimeout(timer); } catch (e) { }
+                    //    },
+                    //    'mouseleave': function () {
+                    //        timer = setTimeout(function () {
+                    //            _loginedUserInfo.slideUp(500);
+                    //        }, 500);
+                    //    }
+                    //});
+                    _loginAnchor.html('尊敬的&lt;a  class="login_poping" href="/user/default.aspx"&gt;&lt;span&gt;' + _response.find('username').text() + "&lt;/span&gt;&lt;/a&gt;您好！").fadeIn();
+                    $('#loginStatusSign').hide();
+                    $('#logout').click(function () {
+                        $.pe.ajax('logout', { success: function (response) {
+                            if ($(response).find('status').text() == 'ok') {
+                                $('#loginField input[name="username"]').val('');
+                                $('#loginField input[name="userpass"]').val('');
+                                $('#loginField input[name="validate"]').val('');
+                                $('#loginField input[name="saveinfo"]').attr("checked", false);
+                                location.reload();
+                            }
+                        }
+                        });
+                    })
+                } else {
+                    $.pe.ajax('checkLoginValidate', { success: function (response) {
+                        if ($(response).find('status').text() == 'yes') {
+                            $('#validateSign').click(function () { $.pe.refreshValidateCode($('.validateSign')); });
+                            $('#validateField').show();
+                        }
+                    }
+                    });
+                    $('#validateCode').focus(function(){$('#validateSign').click();$('#validateSign').show();})
+                    $('#loginAnchor').text('会员登录').click(function () {
+                        $('#loginField').overlay({ api: true, expose: true }).load(); return false;
+                    }).fadeIn();
+                    $('#login').click(function () {
+                        var username = $('#loginField input[name="username"]');
+                        var userpass = $('#loginField input[name="userpass"]');
+                        var saveinfo = $('#loginField input[name="saveinfo"]');
+                        var validate = $('#loginField input[name="validate"]');
+
+                        if (username.val() == '') {
+                            alert('请填写用户名！');
+                            username.focus();
+                            return;
+                        }
+                        if (userpass.val() == '') {
+                            alert('请填写密码！');
+                            userpass.focus();
+                            return;
+                        }
+                        if ($('#validateField').css("display") != 'none') {
+                            if (validate.val() == '') {
+                                alert("请填写验证码！");
+                                validate.focus();
+                                return;
+                            }
+                        }
+                        $.pe.ajax('userLogin', {
+                            params: {
+                                username: username.val(),
+                                password: userpass.val(),
+                                checkcode: validate.val(),
+                                expiration: saveinfo.attr("checked") ? 'Month' : 'None'
+                            }, success: function (response) {
+                                var _response = $(response)
+                                switch (_response.find('status').text()) {
+                                    case "ok":
+                                        location.reload();
+                                        break;
+                                    case "err":
+                                        alert(_response.find('body').text());
+                                        $.pe.refreshValidateCode($('.validateSign'));
+                                        break;
+                                }
+                            }
+                        })
+                    })
+                    $('#loginStatusSign').hide();
+                    $('#loginField').keypress(function (e) {
+                        if ((e.which &amp;&amp; e.which == 13) || (e.keyCode &amp;&amp; e.keyCode == 13)) {
+                            $('#login').click();
+                            return false;
+                        }
+                        return true;
+                    })
+                }
+            }
+            })
+        }
+        checkUserLogin();
+    })
+
+</script>
+<!--网站顶部结束-->
+<!--网站中部定义开始-->
+<div class="wrapper">
+    <!--网站广告开始-->
+    <div class="web_ad">
+    </div>
+    <!--网站广告结束-->
+</div>
+<!--网站中部定义结束-->
+
+<!--网站中部定义二开始-->
+<div class="wrapper">
+<!--侧栏开始-->
+<div class="sidebar mtop10">
+    <!--会员中心开始-->
+    <div class="user">
+        <h3>评委登录</h3>
+        <div class="user_info">
+            <div class="user_login">
+                <img align="absmiddle" alt="正在加载数据..." src="/Template/Default/Skin/Images/loading.gif" id="loginStatusSign2" style="display: none;">
+                <ul class="userlogin" style="" id="loginField2">
+                    <li>用户名：<input type="text" class="inputtext" maxlength="20" name="username" id="username"></li>
+                    <li>密&nbsp;&nbsp;码：<input type="password" class="inputtext" name="userpass"></li>
+                    <li style="display: none" id="validateField2">验证码：<input type="text" style="width: 50px;" class="inputtext" maxlength="6" name="validate" id="validationCode2"><img align="absmiddle" src="" title="换一个" id="validateSign2" class="validateSign" style="display:none"></li>
+                    <li class="save"><label><input type="checkbox" name="saveinfo">下次自动登录</label></li>
+                    <li class="reg_user"><input type="submit" class="user_login_submit" value="" id="login2">&nbsp;&nbsp;</li>
+                    <li class="reg"><a class="reg_password" title="忘记密码" href="/User/GetPassword.aspx">忘记密码？</a>&nbsp;&nbsp;<a title="立即注册" href="/User/Register.aspx">立即注册</a></li>
+
+                </ul>
+                <ul style="display: none" class="loginedinfo" id="loginedUserInfo2">
+                    <li>{username}，您好！您有：</li>
+                    <li>资金余额：{balances} 元</li>
+                    <li>可用{pointName}：{point} {pointUnit}</li>
+                    <li>经验积分：{experience} 分</li>
+                    <li>待阅短信：{message} 条</li>
+                    <li>待签文章：{signinArticle} 篇</li>
+                    <li>登录次数：{loginCount} 次</li>
+                    <li><a href="/User/Default.aspx">会员中心</a>|<a href="javascript:void(0)" name="logout" id="logout2">退出登录</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="underline">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#username').click(function() { $('.user_info').expose({ api: true }).load(); });
+            var checkUserLogin2 = function() {
+                $.pe.ajax('checkUserLogin', { success: function(response) {
+                    var _response = $(response);
+                    if (_response.find('status').text() == 'ok') {
+                        var _loginedUserInfo = $('#loginedUserInfo2');
+                        _loginedUserInfo.html($.pe.replaceUserInfoVariable(_loginedUserInfo.html(), _response)).fadeIn();
+                        $('#loginStatusSign2').hide();
+                        $('#logout2').click(function() {
+                            $.pe.ajax('logout', { success: function(response) {
+                                if ($(response).find('status').text() == 'ok') {
+                                    $('#loginField2 input[name="username"]').val('');
+                                    $('#loginField2 input[name="userpass"]').val('');
+                                    $('#loginField2 input[name="validate"]').val('');
+                                    $('#loginField2 input[name="saveinfo"]').attr("checked", false);
+                                    location.reload();
+                                }
+                            }
+                            });
+                        })
+                    } else {
+                        $.pe.ajax('checkLoginValidate', { success: function(response) {
+                            if ($(response).find('status').text() == 'yes') {
+                                $('#validateSign2').click(function() { $.pe.refreshValidateCode('.validateSign'); });
+                                $('#validateField2').show();
+                            }
+                        }
+                        });
+                        $('#validationCode2').focus(function(){$('#validateSign2').click();$('#validateSign2').show();})
+                        $('#login2').click(function() {
+                            var username = $('#loginField2 input[name="username"]');
+                            var userpass = $('#loginField2 input[name="userpass"]');
+                            var saveinfo = $('#loginField2 input[name="saveinfo"]');
+                            var validate = $('#loginField2 input[name="validate"]');
+
+                            if (username.val() == '') {
+                                alert('请填写用户名！');
+                                username.focus();
+                                return;
+                            }
+                            if (userpass.val() == '') {
+                                alert('请填写密码！');
+                                userpass.focus();
+                                return;
+                            }
+                            if ($('#validateField2').css("display") != 'none') {
+                                if (validate.val() == '') {
+                                    alert("请填写验证码！");
+                                    validate.focus();
+                                    return;
+                                }
+                            }
+                            $.pe.ajax('userLogin', {
+                                params: {
+                                    username: username.val(),
+                                    password: userpass.val(),
+                                    checkcode: validate.val(),
+                                    expiration: saveinfo.attr("checked") ? 'Month' : 'None'
+                                }, success: function(response) {
+                                    var _response = $(response)
+                                    switch (_response.find('status').text()) {
+                                        case "ok":
+                                            location.reload();
+                                            break;
+                                        case "err":
+                                            alert(_response.find('body').text());
+                                            $.pe.refreshValidateCode($('.validateSign'));
+                                            break;
+                                    }
+                                }
+                            })
+                        })
+                        $('#loginStatusSign2').hide();
+                        $('#loginField2').fadeIn();
+                        $('#loginField2').keypress(function(e) {
+                            if ((e.which &amp;&amp; e.which == 13) || (e.keyCode &amp;&amp; e.keyCode == 13)) {
+                                $('#login2').click();
+                                return false;
+                            }
+                            return true;
+                        })
+                    }
+                }
+                })
+            }
+            checkUserLogin2();
+        })
+    </script>
+    <!--会员中心结束-->
+</div>
+<!--侧栏结束-->
+<!--内容块开始-->
+<div class="content">
+    <!--模块一开始-->
+    <div class="area left">
+        <h3><span><em>本站专题</em></span><a title="更多" target="_blank" href="/Special.aspx"><img align="absmiddle" alt="更多" src="/Template/Default/Skin/images/more.gif"></a></h3>
+        <ul>
+            <font style="color:red">还没有任何内容！</font>
+        </ul>
+        <div class="underline_area">
+        </div>
+    </div>
+    <!--模块一结束-->
+    <!--模块二开始-->
+    <div class="area right">
+        <h3><span><em>文章中心</em></span><a title="更多" target="_blank" href="/Category_1/Index.aspx"><img align="absmiddle" alt="更多" src="/Template/Default/Skin/images/more.gif"></a></h3>
+        <div class="tv_center">
+            <ul class="tv_pictrue">
+
+                <span class="missing_data">还没有任何内容！</span>
+
+            </ul>
+            <div class="clear">
+            </div>
+            <ul class="tv_text">
+
+
+                <li>
+                    <a target="_blank" href="/Item/1.aspx">sdsd</a>
+                </li>
+
+                <div class="clear">
+                </div>
+            </ul>
+        </div>
+        <div class="underline_area">
+        </div>
+    </div>
+    <!--模块二结束-->
+    <!--模块广告开始-->
+    <div class="clear">
+    </div>
+    <div class="area_ad mtop10">
+
+    </div>
+    <!--模块广告结束-->
+    <!--模块三开始-->
+    <div class="area left">
+        <h3><span><em>下载中心</em></span><a title="更多" target="_blank" href="/Category_3/Index.aspx"><img align="absmiddle" alt="更多" src="/Template/Default/Skin/images/more.gif"></a></h3>
+        <ul>
+
+
+            <li>
+                <span class="missing_data">还没有任何内容！</span>
+            </li>
+
+        </ul>
+        <div class="underline_area">
+        </div>
+    </div>
+    <!--模块三结束-->
+    <!--模块四开始-->
+    <div class="area right">
+        <h3><span><em>问卷调查列表</em></span></h3>
+        <div class="summary">
+            <ul>
+                <li><a title="测试问卷调查" target="
+                    _blank
+                  " href="
+                    /Survey/20130415160333.html">测试问卷调查<span class="datetime">04-15</span></a></li>
+            </ul>
+        </div>
+        <div class="underline_area">
+        </div>
+    </div>
+    <!--模块四结束-->
+    <div class="clear">
+    </div>
+    <div class="area_ad mtop10">
+
+    </div>
+    <!--模块五开始-->
+    <div class="area left">
+        <h3><span><em>最新评论</em></span></h3>
+        <ul id="newCommonList"><li>
+            <font style="color:red">还没有任何内容！</font>
+        </li></ul>
+        <script type="text/javascript">
+            $.pe.ajax('accessLabel', {
+                labelName: 'AJAX评论简单列表',
+                params: { outputQty: 8, contentLength: 40 },
+                success: function (response) {
+                    $('#newCommonList').html($(response).find('body').text())
+                }
+            })
+        </script>
+        <div class="underline_area">
+        </div>
+    </div>
+    <!--模块五结束-->
+    <!--模块六开始-->
+    <div class="area right">
+        <h3><span><em>雁过留声</em></span><a title="更多" target="_blank" href="/Category_7/Index.aspx"><img align="absmiddle" alt="更多" src="/Template/Default/Skin/images/more.gif"></a></h3>
+        <ul>
+
+
+            <li>
+                <span class="missing_data">还没有任何内容！</span>
+            </li>
+
+        </ul>
+        <div class="underline_area">
+        </div>
+    </div>
+    <div class="clear"></div>
+    <!--模块六结束-->
+</div>
+<!--内容块结束-->
+<div class="clear">
+</div>
+
+</div>
+<!--网站中部定义二结束-->
+
+<!--弹出公告层-->
+
+<!--弹出公告层结束-->
+<!--网站底部开始-->
+<div id="footer">
+    <div class="wrapper">
+        <div class="service">
+            <a title="联系我们" href="javascript:void(0)">联系我们</a> | <a title="网站留言" target="_blank" href="/Category_7/Index.aspx">网站留言</a> | <a title="友情链接" target="_blank" href="/Category_6/Index.aspx">友情链接</a> | <a title="版权声明" target="_blank" href="/Category_8/Index.aspx">版权声明</a> | <a title="关于我们" href="javascript:void(0)">关于我们</a> | <a title="管理登录" target="_blank" href="/Admin/Index.aspx">管理登录</a>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="copyright">
+
+        </div>
+    </div>
+</div>
+<!--网站底部结束-->
+
+
+</body></html>
